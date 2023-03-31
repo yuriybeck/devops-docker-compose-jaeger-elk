@@ -7,20 +7,20 @@ services:
       - elastic-jaeger
     ports:
       - "127.0.0.1:9200:9200"
-      - "127.0.0.1:9300:9300"
+      #- "127.0.0.1:9300:9300"
     restart: on-failure
     environment:
-      - cluster.name=jaeger-cluster
-      - discovery.type=single-node
-      - http.host=0.0.0.0
-      - transport.host=127.0.0.1
+      - cluster_name=jaeger-cluster
+      - discovery_type=single-node
+      - http_host=0.0.0.0
+      - transport_host=127.0.0.1
       - ES_JAVA_OPTS=-Xms512m -Xmx512m
-      - xpack.security.enabled=false
+      - xpack_security_enabled=false
     volumes:
-      - esdata:/usr/share/elasticsearch/data
+      - data:/usr/share/elasticsearch/data
 
   jaeger-collector:
-    image: jaegertracing/jaeger-collector
+    image: hub.docker.com/jaegertracing/jaeger-collector
     ports:
       - "14269:14269"
       - "14268:14268"
@@ -41,14 +41,14 @@ services:
       - elasticsearch
 
   jaeger-agent:
-    image: jaegertracing/jaeger-agent
+    image: hub.docker.com/jaegertracing/jaeger-agent
     hostname: jaeger-agent
     command: ["--collector.host-port=jaeger-collector:14267"]
     ports:
-      - "5775:5775/udp"
+      #- "5775:5775/udp"
       - "6831:6831/udp"
       - "6832:6832/udp"
-      - "5778:5778"
+      #- "5778:5778"
     networks:
       - elastic-jaeger
     restart: on-failure
@@ -58,7 +58,7 @@ services:
       - jaeger-collector
 
   jaeger-query:
-    image: jaegertracing/jaeger-query
+    image: hub.docker.com/jaegertracing/jaeger-query
     environment:
       - SPAN_STORAGE_TYPE=elasticsearch
       - no_proxy=localhost
@@ -77,8 +77,11 @@ services:
       - jaeger-agent
 
 volumes:
-  esdata:
-    driver: local
+  data:
+    driver: azure_file
+    driver_opts:
+      share_name: aci-test-volume
+      storage_account_name: elasticjaeger
 
 networks:
   elastic-jaeger:
