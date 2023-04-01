@@ -1,0 +1,7 @@
+FROM jaegertracing/jaeger-query:latest
+
+ENV SPAN_STORAGE_TYPE elasticsearch
+ENV no_proxy localhost
+ENV elk_url http://elasticsearch:9200
+
+EXPOSE 16686

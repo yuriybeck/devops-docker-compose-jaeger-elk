@@ -1,0 +1,6 @@
+FROM jaegertracing/jaeger-collector
+
+ENV SPAN_STORAGE_TYPE elasticsearch
+
+EXPOSE 14269
+

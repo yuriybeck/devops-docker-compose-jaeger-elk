@@ -1,0 +1,5 @@
+FROM jaegertracing/jaeger-agent:latest
+
+ENV SPAN_STORAGE_TYPE elasticsearch
+
+EXPOSE 6831
