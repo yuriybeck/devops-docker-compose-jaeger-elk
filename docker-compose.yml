@@ -2,7 +2,7 @@ version: "3"
 
 services:
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:6.3.1
+    image: sbsglobalweregistry.azurecr.io/sbs-elasticsearch-jaeger:7.3.2
     networks:
       - elastic-jaeger
     ports:
@@ -20,7 +20,7 @@ services:
       - data:/usr/share/elasticsearch/data
 
   jaeger-collector:
-    image: hub.docker.com/jaegertracing/jaeger-collector
+    image: sbsglobalweregistry.azurecr.io/jaeger-collector
     ports:
       - "14269:14269"
       - "14268:14268"
@@ -41,7 +41,7 @@ services:
       - elasticsearch
 
   jaeger-agent:
-    image: hub.docker.com/jaegertracing/jaeger-agent
+    image: sbsglobalweregistry.azurecr.io/jaeger-agent
     hostname: jaeger-agent
     command: ["--collector.host-port=jaeger-collector:14267"]
     ports:
@@ -58,7 +58,7 @@ services:
       - jaeger-collector
 
   jaeger-query:
-    image: hub.docker.com/jaegertracing/jaeger-query
+    image: sbsglobalweregistry.azurecr.io/jaeger-query
     environment:
       - SPAN_STORAGE_TYPE=elasticsearch
       - no_proxy=localhost
