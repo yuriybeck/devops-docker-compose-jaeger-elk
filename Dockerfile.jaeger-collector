@@ -1,6 +1,9 @@
-FROM jaegertracing/jaeger-collector
+FROM jaegertracing/jaeger-collector:latest
 
 ENV SPAN_STORAGE_TYPE elasticsearch
 
 EXPOSE 14269
-
+EXPOSE 14268
+EXPOSE 14267
+EXPOSE 14250
+EXPOSE 9411

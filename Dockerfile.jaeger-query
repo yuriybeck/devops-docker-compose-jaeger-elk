@@ -5,3 +5,4 @@ ENV no_proxy localhost
 ENV elk_url http://elasticsearch:9200
 
 EXPOSE 16686
+EXPOSE 16687
